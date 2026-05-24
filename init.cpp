@@ -3,21 +3,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 #include <pthread.h>
-
-struct Account {
-    long long balance;
-    long long min_balance;
-    long long max_balance;
-    bool is_frozen;
-    pthread_mutex_t lock;
-};
-
-struct Bank {
-    int num_accounts;
-    Account accounts[];
-};
-
-#define SHM_NAME "/transparent_bank_shm"
+#include "bank.h"
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
