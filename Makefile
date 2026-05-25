@@ -26,26 +26,26 @@ deinit: deinit.o
 
 test: debug
 	./init 2
-	printf "1\n0\n8\n" | ./client
-	printf "6\n1\n100\n8\n" | ./client
-	printf "5\n0\n1\n50\n8\n" | ./client
+	printf "get balance 0\nexit\n" | ./client
+	printf "set max 1 100\nexit\n" | ./client
+	printf "transfer 0 1 50\nexit\n" | ./client
 	./deinit
 
 memcheck: debug
 	./init 2
-	printf "6\n1\n100\n8\n" | valgrind --tool=memcheck --leak-check=full ./client
+	printf "set max 1 100\ntransfer 0 1 50\nexit\n" | valgrind --tool=memcheck --leak-check=full ./client
 	./deinit
 
 helgrind: debug
 	./init 2
-	printf "6\n1\n100\n8\n" | valgrind --tool=helgrind ./client
+	printf "set max 1 100\ntransfer 0 1 50\nexit\n" | valgrind --tool=helgrind ./client
 	./deinit
 
 coverage: CXXFLAGS += --coverage
 coverage: clean debug
 	./init 2
-	printf "6\n1\n100\n8\n" | ./client
-	printf "5\n0\n1\n50\n8\n" | ./client
+	printf "set max 1 100\ntransfer 0 1 50\nexit\n" | ./client
+	printf "get balance 0\nexit\n" | ./client
 	./deinit
 	gcov client.cpp init.cpp deinit.cpp
 
