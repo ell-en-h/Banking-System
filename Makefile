@@ -42,6 +42,7 @@ helgrind: debug
 	./deinit
 
 coverage: CXXFLAGS += --coverage
+coverage: LIBS += --coverage
 coverage: clean debug
 	./init 2
 	printf "set max 1 100\ntransfer 0 1 50\nexit\n" | ./client
